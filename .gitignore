@@ -1,0 +1,8 @@
+target/
+.idea/
+.vscode/
+.gradle/
+*.iml
+.DS_Store
+Thumbs.db
+*.log
