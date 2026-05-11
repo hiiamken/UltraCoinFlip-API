@@ -6,7 +6,7 @@
 
   <groupId>com.kstudio</groupId>
   <artifactId>ultracoinflip-api</artifactId>
-  <version>5.0.0</version>
+  <version>5.0.1</version>
   <packaging>jar</packaging>
   <name>UltraCoinFlip API</name>
   <description>Public API for the UltraCoinFlip plugin.</description>
