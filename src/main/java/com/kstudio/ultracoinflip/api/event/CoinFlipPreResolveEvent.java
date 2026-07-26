@@ -1,18 +1,18 @@
 package com.kstudio.ultracoinflip.api.event;
 
 import java.util.UUID;
-import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 
-public class CoinFlipPreResolveEvent extends Event implements Cancellable {
+// Observational, not cancellable: the winner is already drawn when this fires, and both stakes are
+// held by the plugin, so a veto would either strand the pot or let a listener rig the outcome.
+public class CoinFlipPreResolveEvent extends Event {
 
     private static final HandlerList HANDLERS = new HandlerList();
 
     private final UUID gameId;
     private final UUID predictedWinner;
     private final UUID predictedLoser;
-    private boolean cancelled;
 
     public CoinFlipPreResolveEvent(UUID gameId, UUID predictedWinner, UUID predictedLoser) {
         this.gameId = gameId;
@@ -30,16 +30,6 @@ public class CoinFlipPreResolveEvent extends Event implements Cancellable {
 
     public UUID getPredictedLoser() {
         return predictedLoser;
-    }
-
-    @Override
-    public boolean isCancelled() {
-        return cancelled;
-    }
-
-    @Override
-    public void setCancelled(boolean cancel) {
-        this.cancelled = cancel;
     }
 
     @Override

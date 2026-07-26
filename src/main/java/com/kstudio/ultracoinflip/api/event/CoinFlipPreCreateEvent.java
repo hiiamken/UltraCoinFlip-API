@@ -20,7 +20,7 @@ public class CoinFlipPreCreateEvent extends Event implements Cancellable {
         this.host = host;
         this.betAmount = betAmount;
         this.currencyId = currencyId;
-        this.side = side;
+        this.side = side == null ? GameSide.UNSPECIFIED : side;
     }
 
     public UUID getHost() {

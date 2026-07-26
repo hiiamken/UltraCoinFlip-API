@@ -10,10 +10,20 @@ public class CoinFlipJoinEvent extends Event {
 
     private final UUID gameId;
     private final UUID joiner;
+    private final UUID host;
+    private final String currencyId;
+    private final double betAmount;
 
     public CoinFlipJoinEvent(UUID gameId, UUID joiner) {
+        this(gameId, joiner, null, null, 0d);
+    }
+
+    public CoinFlipJoinEvent(UUID gameId, UUID joiner, UUID host, String currencyId, double betAmount) {
         this.gameId = gameId;
         this.joiner = joiner;
+        this.host = host;
+        this.currencyId = currencyId;
+        this.betAmount = betAmount;
     }
 
     public UUID getGameId() {
@@ -22,6 +32,18 @@ public class CoinFlipJoinEvent extends Event {
 
     public UUID getJoiner() {
         return joiner;
+    }
+
+    public UUID getHost() {
+        return host;
+    }
+
+    public String getCurrencyId() {
+        return currencyId;
+    }
+
+    public double getBetAmount() {
+        return betAmount;
     }
 
     @Override
