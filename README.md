@@ -2,7 +2,7 @@
 
 # UltraCoinFlip API
 
-**Public API for [UltraCoinFlip](https://www.spigotmc.org/resources/ultracoinflip.00000/) — integrate other plugins with the coinflip system.**
+**Public API for [UltraCoinFlip]([https://www.spigotmc.org/resources/ultracoinflip.00000/](https://www.spigotmc.org/resources/%E2%AD%90-ultracoinflip-1-8-x-26-2-the-best-coinflip-plugin-geyser-folia-support.130124/)) — integrate other plugins with the coinflip system.**
 
 [![Java](https://img.shields.io/badge/Java-8+-orange)](https://www.java.com/)
 [![Discord](https://img.shields.io/badge/Discord-Support-7289DA)](https://discord.gg/h7F7GysXCf)
