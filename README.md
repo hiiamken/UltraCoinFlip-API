@@ -99,11 +99,11 @@ api.getEarningsLimit(playerUuid, "vault", LimitType.MAX_WIN).ifPresent(info -> {
 | `CoinFlipCreateEvent` | no | after a game is registered |
 | `CoinFlipPreJoinEvent` | yes | before a player joins |
 | `CoinFlipJoinEvent` | no | after a player joins |
-| `CoinFlipPreResolveEvent` | yes | before payout (last-chance hook) |
+| `CoinFlipPreResolveEvent` | no | before payout (read-only) |
 | `CoinFlipFinishEvent` | no | after payout |
 | `CoinFlipRefundEvent` | no | when a bet is refunded |
-| `CoinFlipCancelEvent` | no | when a game is cancelled |
-| `CoinFlipEarningsLimitReachedEvent` | no | when a player first crosses a cap |
+| `CoinFlipCancelEvent` | no | when a game is cancelled or expires |
+| `CoinFlipEarningsLimitReachedEvent` | no | each time a cap blocks a create, join or bot game |
 
 ## Versioning
 
