@@ -1,11 +1,10 @@
 jdk:
   - openjdk21
 
-# JitPack's image currently ships a Maven whose boot/plexus-classworlds jar is missing, so both
-# their `mvn` and the wrapper that lands on it die with ClassNotFoundException: Launcher.
-# Fetching a known-good Maven keeps the build independent of whatever is in the image.
+# Their image fails every Maven with "ClassNotFoundException: Launcher", including a freshly
+# downloaded one, so this run prints what Maven actually sees before trying to build.
 install:
-  - curl -sSL -o /tmp/maven.tar.gz https://archive.apache.org/dist/maven/maven-3/3.9.9/binaries/apache-maven-3.9.9-bin.tar.gz
-  - tar -xzf /tmp/maven.tar.gz -C /tmp
-  - /tmp/apache-maven-3.9.9/bin/mvn -version
-  - /tmp/apache-maven-3.9.9/bin/mvn -B clean install -DskipTests
+  - echo "JAVA_HOME=$JAVA_HOME"; echo "MAVEN_OPTS=$MAVEN_OPTS"; echo "MAVEN_HOME=$MAVEN_HOME"; echo "M2_HOME=$M2_HOME"; echo "CLASSPATH=$CLASSPATH"; which java; java -version
+  - curl -sSL -o /tmp/maven.tar.gz https://archive.apache.org/dist/maven/maven-3/3.9.9/binaries/apache-maven-3.9.9-bin.tar.gz; echo "curl exit=$?"; ls -la /tmp/maven.tar.gz
+  - tar -xzf /tmp/maven.tar.gz -C /tmp; echo "tar exit=$?"; ls -la /tmp/apache-maven-3.9.9/boot/
+  - java -classpath "/tmp/apache-maven-3.9.9/boot/plexus-classworlds-3.0.3.jar" -Dclassworlds.conf=/tmp/apache-maven-3.9.9/bin/m2.conf -Dmaven.home=/tmp/apache-maven-3.9.9 -Dmaven.multiModuleProjectDirectory="$PWD" org.codehaus.plexus.classworlds.launcher.Launcher -B clean install -DskipTests
