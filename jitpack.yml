@@ -1,10 +1,9 @@
 jdk:
   - openjdk21
 
-# Their image fails every Maven with "ClassNotFoundException: Launcher", including a freshly
-# downloaded one, so this run prints what Maven actually sees before trying to build.
+# Tracing why every mvn in this image dies with "ClassNotFoundException: Launcher",
+# then building through classworlds directly, which does not depend on bin/mvn.
 install:
-  - echo "JAVA_HOME=$JAVA_HOME"; echo "MAVEN_OPTS=$MAVEN_OPTS"; echo "MAVEN_HOME=$MAVEN_HOME"; echo "M2_HOME=$M2_HOME"; echo "CLASSPATH=$CLASSPATH"; which java; java -version
-  - curl -sSL -o /tmp/maven.tar.gz https://archive.apache.org/dist/maven/maven-3/3.9.9/binaries/apache-maven-3.9.9-bin.tar.gz; echo "curl exit=$?"; ls -la /tmp/maven.tar.gz
-  - tar -xzf /tmp/maven.tar.gz -C /tmp; echo "tar exit=$?"; ls -la /tmp/apache-maven-3.9.9/boot/
-  - java -classpath "/tmp/apache-maven-3.9.9/boot/plexus-classworlds-3.0.3.jar" -Dclassworlds.conf=/tmp/apache-maven-3.9.9/bin/m2.conf -Dmaven.home=/tmp/apache-maven-3.9.9 -Dmaven.multiModuleProjectDirectory="$PWD" org.codehaus.plexus.classworlds.launcher.Launcher -B clean install -DskipTests
+  - curl -sSL -o /tmp/maven.tar.gz https://archive.apache.org/dist/maven/maven-3/3.9.9/binaries/apache-maven-3.9.9-bin.tar.gz; tar -xzf /tmp/maven.tar.gz -C /tmp; ls -la /tmp/apache-maven-3.9.9/bin/
+  - sh -x /tmp/apache-maven-3.9.9/bin/mvn -version 2>&1 | tail -25 || true
+  - java -classpath /tmp/apache-maven-3.9.9/boot/plexus-classworlds-*.jar -Dclassworlds.conf=/tmp/apache-maven-3.9.9/bin/m2.conf -Dmaven.home=/tmp/apache-maven-3.9.9 -Dmaven.multiModuleProjectDirectory="$PWD" -Dlibrary.jansi.path=/tmp/apache-maven-3.9.9/lib/jansi-native org.codehaus.plexus.classworlds.launcher.Launcher -B clean install -DskipTests
