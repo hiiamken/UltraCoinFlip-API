@@ -20,16 +20,22 @@
 
   <repositories>
     <repository>
+      <id>spigotmc</id>
+      <url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
+    </repository>
+    <repository>
       <id>papermc</id>
       <url>https://repo.papermc.io/repository/maven-public/</url>
     </repository>
   </repositories>
 
   <dependencies>
+    <!-- The events here only need Event/Cancellable/HandlerList. A modern paper-api is Java 21
+         bytecode, which javac rejects while targeting Java 8, so build against the old API. -->
     <dependency>
-      <groupId>io.papermc.paper</groupId>
-      <artifactId>paper-api</artifactId>
-      <version>1.21.11-R0.1-SNAPSHOT</version>
+      <groupId>org.spigotmc</groupId>
+      <artifactId>spigot-api</artifactId>
+      <version>1.8.8-R0.1-SNAPSHOT</version>
       <scope>provided</scope>
     </dependency>
   </dependencies>
